@@ -69,7 +69,6 @@ copiar.addEventListener("click", () => {
     }, 1000);
   });
 });
-
 const mostrarResultado = () => {
   textDefault.style.display = "none";
   textResult.style.display = "flex";
