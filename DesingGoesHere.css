@@ -85,7 +85,7 @@ font-family: 'Sofia Sans Semi Condensed', sans-serif;
     z-index: 1;
     font-family: 'Montserrat', sans-serif;
 font-family: 'Sofia Sans Semi Condensed', sans-serif;
-    color: white;
+    color: darkblue;
     cursor: pointer;
 }  
 .btn-encriptar::before {
@@ -96,7 +96,7 @@ font-family: 'Sofia Sans Semi Condensed', sans-serif;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) rotate(45deg);
-    background: white;
+    background: lightblue;
     transition: .5s ease;
     display: block;
     z-index: -1;
