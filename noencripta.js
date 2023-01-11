@@ -1,51 +1,88 @@
- function encriptar() {
+const encriptar = document.getElementById("encriptar");
+const desencriptar = document.getElementById("desencriptar");
+const copiar = document.getElementById("copiar");
 
-      var frase = document.getElementById("textoEncriptado").value.toLowerCase();
-      
-      //i = es para considerar mayusculas y minusculas
-      //m = es para considerar multiples lineas
-      //g = considera toda la linea u oracion 
+const textDefault = document.querySelector(".container-text-default");
+const textResult = document.querySelector(".container-context-resultado");
+const text = document.querySelector(".text-message-resultado");
 
-       var textoEncriptado = frase.replace (/e/img, "enter");
+encriptar.addEventListener("click", () => {
+  let input = document.getElementById("inputEncriptar").value;
 
-        var textoEncriptado = textoEncriptado.replace (/i/img, "imes");
+  const validacion = /([A-ZáéíóúÁÉÍÓÚñ\d$@$!%*?&])/gm.test(input);
+  if (!validacion && input.length > 0) {
+    const mapObj = {
+      e: "enter",
+      i: "imes",
+      a: "ai",
+      o: "ober",
+      u: "ufat",
+    };
+    input = input.replace(/e|i|a|o|u/gm, (matched) => {
+      return mapObj[matched];
+    });
 
-        var textoEncriptado = textoEncriptado.replace (/a/img, "ai");
+    quitarAlerta();
+    mostrarResultado();
 
-         var textoEncriptado = textoEncriptado.replace (/o/img, "ober");
+    text.textContent = input;
+  } else {
+    mostrarAlerta();
+  }
+});
 
-          var textoEncriptado = textoEncriptado.replace (/u/img, "ufat");
+desencriptar.addEventListener("click", () => {
+  let input = document.getElementById("inputEncriptar").value;
 
-       document.getElementById("textoDesencriptado").innerHTML = textoEncriptado;
+  const validacion = /([A-ZáéíóúÁÉÍÓÚñ\d$@$!%*?&])/gm.test(input);
+  if (!validacion && input.length > 0) {
+    const mapObj = {
+      enter: "e",
+      imes: "i",
+      ai: "a",
+      ober: "o",
+      ufat: "u",
+    };
+    input = input.replace(/enter|imes|ai|ober|ufat/gm, (matched) => {
+      return mapObj[matched];
+    });
 
- }
+    quitarAlerta();
+    mostrarResultado();
 
-  function desencriptar() {
+    text.textContent = input;
+  } else {
+    mostrarAlerta();
+  }
+});
 
-      var frase = document.getElementById("textoEncriptado").value.toLowerCase();
-      
-      //i = es para considerar mayusculas y minusculas
-      //m = es para considerar multiples lineas
-      //g = considera toda la linea u oracion 
+copiar.addEventListener("click", () => {
+  let copiado = text.textContent;
 
-       var textoEncriptado = frase.replace (/enter/img,  "e");
+  navigator.clipboard.writeText(copiado).then(() => {
+    copiar.textContent = "Copiado ✅";
+    copiar.classList.add("btn-copiado");
 
-        var textoEncriptado = textoEncriptado.replace (/imes/img,  "i");
+    window.setTimeout(() => {
+      copiar.textContent = "Copiar";
+      copiar.classList.remove("btn-copiado");
+    }, 1000);
+  });
+});
 
-        var textoEncriptado = textoEncriptado.replace (/ai/img, "a");
-
-         var textoEncriptado = textoEncriptado.replace (/ober/img, "o");
-
-          var textoEncriptado = textoEncriptado.replace (/ufat/img, "u");
-
-       document.getElementById("textoDesencriptado").innerHTML = textoEncriptado;
- }
-
-function  copiar() {
-
-   var contennido = document.querySelector("#textoDesencriptado");
-
-   contennido.select();
-   document.execCommand("copy");
-
-}
+const mostrarResultado = () => {
+  textDefault.style.display = "none";
+  textResult.style.display = "flex";
+};
+const quitarAlerta = () => {
+  const alert = document.querySelector(".alert-disabled");
+  const alertText = document.querySelector(".text-desencriptar");
+  alertText.classList.remove("text-desencriptar-alert");
+  alert.classList.remove("alert-actived");
+};
+const mostrarAlerta = () => {
+  const alertText = document.querySelector(".text-desencriptar");
+  const alert = document.querySelector(".alert-disabled");
+  alert.classList.add("alert-actived");
+  alertText.classList.add("text-desencriptar-alert");
+};
